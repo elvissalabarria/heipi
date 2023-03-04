@@ -46,20 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
       }),
       child: BlocBuilder<TimerBloc, TimerState>(builder: (context, state) {
         return Scaffold(
-          body: Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Column(
+          body: SingleChildScrollView(
+            child: Container(
+              color: Colors.white,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 60.0),
@@ -69,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Hi, Elvis",
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 22),
                             ),
                           ],
                         ),
@@ -80,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             haveWalked,
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 22),
                           ),
                         ],
                       ),
@@ -100,138 +103,144 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             yourGoal,
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 22),
                           ),
                         ],
                       ),
                     ],
                   ),
-                ),
-                Stack(
-                  children: <Widget>[
-                    SfCircularChart(series: <CircularSeries>[
-                      RadialBarSeries<_PieData, String>(
-                          dataSource: pieData,
-                          innerRadius: '70%',
-                          radius: '70%',
-                          gap: '2%',
-                          maximumValue: 100,
-                          cornerStyle: CornerStyle.bothCurve,
-                          xValueMapper: (_PieData data, _) => data.yData.toString(),
-                          yValueMapper: (_PieData data, _) => data.yData,
-                          pointColorMapper: (_PieData data, _) => data.color)
-                    ]),
-                    Positioned(
-                      bottom: 130,
-                      left: MediaQuery.of(context).size.width * 0.36,
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                '${counterPlant.value.step}',
-                                style: const TextStyle(
-                                    fontSize: 22.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const Text(
-                                "Árboles sembrados",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.clip,
-                                  fontSize: 12.0,
+                  Stack(
+                    children: <Widget>[
+                      SfCircularChart(series: <CircularSeries>[
+                        RadialBarSeries<_PieData, String>(
+                            dataSource: pieData,
+                            innerRadius: '70%',
+                            radius: '70%',
+                            gap: '2%',
+                            maximumValue: 100,
+                            cornerStyle: CornerStyle.bothCurve,
+                            xValueMapper: (_PieData data, _) =>
+                                data.yData.toString(),
+                            yValueMapper: (_PieData data, _) => data.yData,
+                            pointColorMapper: (_PieData data, _) => data.color)
+                      ]),
+                      Positioned(
+                        bottom: 130,
+                        left: MediaQuery.of(context).size.width * 0.36,
+                        child: Center(
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${counterPlant.value.step}',
+                                  style: const TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              )
-                            ],
+                                const Text(
+                                  "Árboles sembrados",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.clip,
+                                    fontSize: 12.0,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    MyActivityScreen(counterPlant.value.step, "step")));
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(walkingsolid),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(walking),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    MyActivityScreen(counterPlant.value.bicy, "bicy")));
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(bikingsolid),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(cycling),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        color: Colors.grey.shade100),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            leaderboard,
-                            style: TextStyle(color: Colors.green.shade400, fontSize: 18),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            topGruop,
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                          Expanded(child: buildListOfTopUser(topUserList))
-                        ],
-                      ),
-                    ),
+                      )
+                    ],
                   ),
-                )
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyActivityScreen(
+                                      counterPlant.value.step, "step")));
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(walkingsolid),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(walking),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyActivityScreen(
+                                      counterPlant.value.bicy, "bicy")));
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(bikingsolid),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(cycling),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          color: Colors.grey.shade100),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              leaderboard,
+                              style: TextStyle(
+                                  color: Colors.green.shade400, fontSize: 18),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              topGruop,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            Expanded(child: buildListOfTopUser(topUserList))
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -274,7 +283,8 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.white,
       child: Container(
         height: MediaQuery.of(context).size.height * 0.08,
-        decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -290,7 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     '${user.countPlant} Árboles',
-                    style: const TextStyle(color: Colors.black26, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.black26, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
